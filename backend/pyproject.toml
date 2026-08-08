@@ -1,0 +1,14 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.141.1",
+    "mysql-connector-python>=26.7.0",
+    "mysqlclient>=2.2.8",
+    "password-validator>=1.0",
+    "pymysql>=1.2.0",
+    "sqlalchemy>=2.0.51",
+]
