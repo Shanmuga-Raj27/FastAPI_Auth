@@ -19,22 +19,10 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Create base class for declarative models
 Base = declarative_base()
 
-app = FastAPI()
-
-
-@app.get("/")
-def test_database_connection():
+def get_db():
+    database = SessionLocal()
     try:
-        with engine.connect() as connection:
-            result = connection.execute(text("SELECT 1"))
-            return {
-                "status": "success",
-                "message": "Connected to MySQL successfully!",
-                "result": result.scalar()
-            }
+        yield database
+    finally:
+        database.close()
 
-    except SQLAlchemyError as e:
-        return {
-            "status": "error",
-            "message": str(e)
-        }

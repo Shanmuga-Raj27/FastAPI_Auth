@@ -1,29 +1,14 @@
-from fastapi import FastAPI, Depends, HTTPException
-from database import SessionLocal, Base, engine
-from schemas import Create_User
-from sqlalchemy.orm import Session
-from db_model import User 
-Base.metadata.create_all(bind=engine)
+from fastapi import FastAPI
+import uvicorn
+from app import db_models
+from app.database import engine
+from app.routes import router
 
 app = FastAPI()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+db_models.Base.metadata.create_all(bind=engine)
 
+app.include_router(router)
 
-@app.post("/users/")
-def create_user(user: Create_User, db: Session = Depends(get_db)):
-    db_user = User(
-        id=user.id,
-        name=user.name,
-        email=user.email,
-        hashed_password=user.hashed_password
-    )
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
+if __name__ == "__main__":
+    uvicorn.run(app=app, host="127.0.0.1", port=8000)
