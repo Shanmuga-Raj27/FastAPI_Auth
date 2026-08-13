@@ -1,5 +1,4 @@
 from sqlalchemy import Column
-from sqlalchemy import Enum as SQLEnum
 from sqlalchemy import Integer, String
 
 from app.database import Base

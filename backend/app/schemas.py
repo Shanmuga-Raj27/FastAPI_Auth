@@ -1,9 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
-from enum import Enum
+
 
 class UserBase(BaseModel):
-    email: str
+    email: EmailStr
     username: str
 
 class UserIn(UserBase):
